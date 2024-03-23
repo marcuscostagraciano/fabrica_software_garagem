@@ -7,3 +7,7 @@ class Marca(models.Model):
 
     def __str__(self) -> str:
         return f"{self.nome.upper()}"
+
+    class Meta:
+        verbose_name = "Marca"
+        verbose_name_plural = "Marcas"
