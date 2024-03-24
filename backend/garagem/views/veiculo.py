@@ -14,5 +14,5 @@ class VeiculoViewSet(ModelViewSet):
         if self.action == "list":
             return VeiculosListSerializer
         if self.action == "retrive":
-            return VeiculosSerializer
-        return VeiculoDetailSerializer
+            return VeiculoDetailSerializer
+        return VeiculosSerializer
