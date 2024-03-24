@@ -1,23 +1,23 @@
 import axios from "axios";
 
 export default class AcessoriosApi {
-    async getAcessorios() {
+    async getAll() {
         const { data } = await axios.get("/acessorios/");
         return data.results;
     }
-    async addAcessorio(acessorio) {
+    async add(acessorio) {
         const { data } = await axios.post("/acessorios/", acessorio);
         return data.results;
     }
-    async updateAcessorio(acessorio) {
+    async update(acessorio) {
         const { data } = await axios.put(`/acessorios/${acessorio.id}/`, acessorio);
         return data.results;
     }
-    async deleteAcessorio(id) {
+    async delete(id) {
         const { data } = await axios.delete(`/acessorios/${id}/`);
         return data.results;
     }
-    async getAcessorio(id) {
+    async get(id) {
         const { data } = await axios.get(`/acessorios/${id}/`);
         return data;
     }

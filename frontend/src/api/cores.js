@@ -1,23 +1,23 @@
 import axios from "axios";
 
 export default class CoresApi {
-    async getCores() {
+    async getAll() {
         const { data } = await axios.get("/cores/");
         return data.results;
     }
-    async addCor(cor) {
+    async add(cor) {
         const { data } = await axios.post("/cores/", cor);
         return data.results;
     }
-    async updateCor(cor) {
+    async update(cor) {
         const { data } = await axios.put(`/cores/${cor.id}/`, cor);
         return data.results;
     }
-    async deleteCor(id) {
+    async delete(id) {
         const { data } = await axios.delete(`/cores/${id}/`);
         return data.results;
     }
-    async getCor(id) {
+    async get(id) {
         const { data } = await axios.get(`/cores/${id}/`);
         return data;
     }
