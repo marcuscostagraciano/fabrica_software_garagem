@@ -1,6 +1,8 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 
+import TableHeaderList from "../components/TableHeaderList.vue";
+
 import MarcasApi from "@/api/marcas";
 const marcasApi = new MarcasApi();
 
@@ -39,6 +41,10 @@ async function excluir(id) {
     limpar();
 }
 
+const theader_text = [
+    "Nome", "Nacionalidade"
+]
+
 </script>
 
 <template>
@@ -58,22 +64,7 @@ async function excluir(id) {
     <hr />
 
     <v-table density="comfortable">
-        <thead>
-            <tr>
-                <th>
-                    Código
-                </th>
-                <th>
-                    Nome
-                </th>
-                <th>
-                    Nacionalidade
-                </th>
-                <th>
-                    Excluir
-                </th>
-            </tr>
-        </thead>
+        <TableHeaderList :th_text="theader_text" />
         <tbody>
             <tr v-for="marca in marcas" :key="marca.name" @click="editar(marca)">
                 <td>{{ marca.id }}</td>

@@ -1,6 +1,8 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 
+import TableHeaderList from "../components/TableHeaderList.vue";
+
 import CategoriasApi from "@/api/categorias";
 const categoriasApi = new CategoriasApi();
 
@@ -57,19 +59,7 @@ async function excluir(id) {
     <hr />
 
     <v-table density="comfortable">
-        <thead>
-            <tr>
-                <th>
-                    Código
-                </th>
-                <th>
-                    Descrição
-                </th>
-                <th>
-                    Excluir
-                </th>
-            </tr>
-        </thead>
+        <TableHeaderList />
         <tbody>
             <tr v-for="categoria in categorias" :key="categoria.name" @click="editar(categoria)">
                 <td>{{ categoria.id }}</td>
