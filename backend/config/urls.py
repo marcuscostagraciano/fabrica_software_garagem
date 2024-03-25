@@ -6,7 +6,7 @@ from drf_spectacular.views import (SpectacularAPIView,
                                    SpectacularRedocView,
                                    SpectacularSwaggerView)
 
-
+from usuario.router import router as usuario_router
 from garagem.views import (AcessorioViewSet,
                            CategoriaViewSet,
                            CorViewSet,
@@ -25,6 +25,7 @@ router.register(r"veiculos", VeiculoViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include(router.urls)),
+    path("", include(usuario_router.urls)),
 
     # OpenAPI 3
     path("api/", include(router.urls)),
