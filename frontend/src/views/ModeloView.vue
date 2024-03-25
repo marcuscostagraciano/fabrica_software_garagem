@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 
 import TableHeaderList from "../components/TableHeaderList.vue";
 
@@ -12,10 +12,7 @@ const marcasApi = new MarcasApi();
 const modelosApi = new ModelosApi();
 
 const categorias = ref([])
-const lista_categorias = ref([])
-
 const marcas = ref([])
-const lista_marcas = ref([])
 
 const defaultModelo = { id: null, nome: "", categoria: null, marca: null };
 const modelos = ref([]);
@@ -27,20 +24,8 @@ onMounted(async () => {
     modelos.value = await modelosApi.getAll();
 
     categorias.value = await categoriasApi.getAll();
-    for (let _ in categorias.value) {
-        lista_categorias.value.push({
-            id: Number(_) + 1,
-            descricao: categorias.value[_]["descricao"]
-        })
-    }
 
     marcas.value = await marcasApi.getAll();
-    for (let _ in marcas.value) {
-        lista_marcas.value.push({
-            id: Number(_) + 1,
-            nome: marcas.value[_]["nome"]
-        })
-    }
 });
 
 function limpar() {
@@ -81,10 +66,9 @@ const theader_text = [
     <v-form class="mx-6">
         <v-text-field v-model="modelo.nome" name="nome" label="Nome"></v-text-field>
 
-        <v-select :items="lista_categorias" item-title="descricao" item-value="id" v-model="modelo.categoria"
+        <v-select :items="categorias" item-title="descricao" item-value="id" v-model="modelo.categoria"
             label="Categoria"></v-select>
-        <v-select :items="lista_marcas" item-title="nome" item-value="id" v-model="modelo.marca"
-            label="Marca"></v-select>
+        <v-select :items="marcas" item-title="nome" item-value="id" v-model="modelo.marca" label="Marca"></v-select>
 
         <v-container class="d-flex justify-center">
             <v-btn @click="salvar" class="bg-surface-variant">
@@ -102,11 +86,12 @@ const theader_text = [
             <tr v-for="modelo in modelos" :key="modelo.name" @click="editar(modelo)">
                 <td>{{ modelo.id }}</td>
                 <td>{{ modelo.nome }}</td>
-
-                <td>{{ lista_categorias[modelo.categoria - 1]["descricao"] }}</td>
-                <td>{{ lista_marcas[modelo.marca - 1]["nome"] }}</td>
+                <td>{{ categorias.filter((item) => item.id == modelo.categoria)[0].descricao }}</td>
+                <td>{{ marcas.filter((item) => item.id == modelo.marca)[0].nome }}</td>
 
                 <!-- Que sirvam de cicatrizes -->
+                <!-- <td>{{ lista_categorias[modelo.categoria - 1]["descricao"] }}</td> -->
+                <!-- <td>{{ lista_marcas[modelo.marca - 1]["nome"] }}</td> -->
                 <!-- <td>{{ modelo.categoria }}</td> -->
                 <!-- <td>{{ categorias.filter((categoria) => categoria['id'] == modelo.categoria)[0]["descricao"] }}</td> -->
                 <!-- <td>{{ getDescCategoria(modelo.categoria)["descricao"] }}</td> -->
