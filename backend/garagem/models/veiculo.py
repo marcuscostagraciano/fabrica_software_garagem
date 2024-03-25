@@ -3,6 +3,7 @@ from django.db import models
 from garagem.models import (Acessorio,
                             Cor,
                             Modelo)
+from uploader.models import Image
 
 
 class Veiculo(models.Model):
@@ -16,6 +17,8 @@ class Veiculo(models.Model):
     descricao: str = models.CharField(max_length=100)
     preco: float = models.DecimalField(max_digits=10, decimal_places=2,
                                        default=0)
+    fotos = models.ManyToManyField(Image,
+                                   related_name="veiculos")
 
     def __str__(self) -> str:
         return f"{self.modelo} - {self.ano}"

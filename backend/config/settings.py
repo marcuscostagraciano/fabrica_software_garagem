@@ -1,23 +1,15 @@
 from pathlib import Path
+import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-&j2xv$j6-dj$az_yqzcjw5$@+y@i($rr#4%dd%#uv77@hi+6=6'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,6 +21,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_spectacular",
     "usuario",
+    "uploader",
     "garagem",
 ]
 
@@ -106,6 +99,12 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "API para gerenciamento de garagem, incluindo endpoints e documentação.",
     "VERSION": "1.0.0",
 }
+
+# App Uploader settings
+MEDIA_URL = "http://localhost:8000/media/"
+MEDIA_ENDPOINT = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+FILE_UPLOAD_PERMISSIONS = 0o640
 
 
 # Internationalization
