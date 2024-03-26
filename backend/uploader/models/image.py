@@ -5,6 +5,8 @@ from django.db import models
 
 from utils.files import get_content_type
 
+from garagem.models import Veiculo
+
 
 def image_file_path(image, _):
     extension = mimetypes.guess_extension(image.file.file.content_type)
@@ -35,6 +37,9 @@ class Image(models.Model):
     file = models.ImageField(upload_to=image_file_path)
     description = models.CharField(max_length=255, blank=True)
     uploaded_on = models.DateTimeField(auto_now_add=True)
+    # Várias fotos podem apontar para um único veículo
+    veiculo: Veiculo = models.ForeignKey(Veiculo,
+                                         on_delete=models.CASCADE)
 
     def __str__(self):
         return "(%s - %s)" % (self.description, self.attachment_key)
