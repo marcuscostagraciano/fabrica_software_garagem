@@ -3,22 +3,30 @@ import { ref, reactive, onMounted } from "vue";
 
 import TableHeaderList from "../components/TableHeaderList.vue";
 
+import CoresApi from "@/api/cores"
+import ModelosApi from "@/api/modelos"
 import VeiculosApi from "@/api/veiculos";
+
+const coresApi = new CoresApi();
+const modelosApi = new ModelosApi();
 const veiculosApi = new VeiculosApi();
 
 const defaultVeiculo = {
     id: null, cor: null, modelo: null,
     ano: null, descricao: "", preco: null
 };
+
+const cores = ref([]);
+const modelos = ref([]);
 const veiculos = ref([]);
+
 const veiculo = reactive({ ...defaultVeiculo });
 const isEditando = ref(false)
 
 onMounted(async () => {
+    cores.value = await coresApi.getAll();
+    modelos.value = await modelosApi.getAll();
     veiculos.value = await veiculosApi.getAll();
-    // console.log(veiculos)
-    // console.log(veiculos.value)
-    // console.log(Object.getOwnPropertyNames(defaultVeiculo).slice(1,));
 });
 
 function limpar() {
@@ -57,14 +65,17 @@ const theader_text = [
 <template>
     <h1 class="my-3">Veículos</h1>
     <v-form class="mx-6">
-        <v-text-field v-model="veiculo.cor" name="cor" label="Cor"></v-text-field>
-        <v-text-field v-model="veiculo.modelo" name="modelo" label="Modelo"></v-text-field>
+        <!-- <v-text-field v-model="veiculo.cor" name="cor" label="Cor"></v-text-field> -->
+        <v-select :items="cores" item-title="descricao" item-value="id" v-model="veiculo.cor" label="Cor"></v-select>
+        <!-- <v-text-field v-model="veiculo.modelo" name="modelo" label="Modelo"></v-text-field> -->
+        <v-select :items="modelos" item-title="nome" item-value="id" v-model="veiculo.modelo" label="Modelo"></v-select>
         <v-text-field v-model="veiculo.ano" name="ano" label="Ano" type="number"></v-text-field>
         <v-text-field v-model="veiculo.descricao" name="descricao" label="Descrição"></v-text-field>
         <v-text-field v-model="veiculo.preco" name="preco" label="Preço"></v-text-field>
 
         <v-container class="d-flex justify-center">
             <v-btn @click="salvar" class="bg-surface-variant">
+                <!-- <v-btn @click="console.log('SAVED')" class="bg-surface-variant"> -->
                 <p v-if="!isEditando">Adicionar</p>
                 <p v-else>Atualizar</p>
             </v-btn>
@@ -79,7 +90,9 @@ const theader_text = [
             <tr v-for="veiculo in veiculos" :key="veiculo.name" @click="editar(veiculo)">
                 <td>{{ veiculo.id }}</td>
                 <td>{{ veiculo.cor }}</td>
-                <td>{{ veiculo.modelo }}</td>
+                <!-- <td>{{ cores.filter((item) => item.id == veiculo.modelo)[0].descricao }}</td> -->
+                <!-- <td>{{ veiculo.modelo }}</td> -->
+                <td>{{ modelos.filter((item) => item.id == veiculo.modelo)[0].nome }}</td>
                 <td>{{ veiculo.ano }}</td>
                 <td>{{ veiculo.descricao }}</td>
                 <td>{{ veiculo.preco }}</td>
