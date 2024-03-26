@@ -65,13 +65,11 @@ const theader_text = [
 <template>
     <h1 class="my-3">Veículos</h1>
     <v-form class="mx-6">
-        <!-- <v-text-field v-model="veiculo.cor" name="cor" label="Cor"></v-text-field> -->
-        <v-select :items="cores" item-title="descricao" item-value="id" v-model="veiculo.cor" label="Cor"></v-select>
-        <!-- <v-text-field v-model="veiculo.modelo" name="modelo" label="Modelo"></v-text-field> -->
-        <v-select :items="modelos" item-title="nome" item-value="id" v-model="veiculo.modelo" label="Modelo"></v-select>
         <v-text-field v-model="veiculo.ano" name="ano" label="Ano" type="number"></v-text-field>
         <v-text-field v-model="veiculo.descricao" name="descricao" label="Descrição"></v-text-field>
         <v-text-field v-model="veiculo.preco" name="preco" label="Preço"></v-text-field>
+        <v-select :items="cores" item-title="descricao" item-value="id" v-model="veiculo.cor" label="Cor"></v-select>
+        <v-select :items="modelos" item-title="nome" item-value="id" v-model="veiculo.modelo" label="Modelo"></v-select>
 
         <v-container class="d-flex justify-center">
             <v-btn @click="salvar" class="bg-surface-variant">
