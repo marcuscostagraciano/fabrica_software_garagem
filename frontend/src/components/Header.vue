@@ -15,7 +15,6 @@ function checkScreenWidth() {
         isMobile.value = false
         mobileNav.value = false
     }
-    console.log(windowWidth.value);
 }
 
 onBeforeMount(() => {
